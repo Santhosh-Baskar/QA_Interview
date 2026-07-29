@@ -19,14 +19,14 @@
 
 | Result | Flaws Found | Behaviour |
 |--------|-------------|-----------|
-| ⭐⭐⭐⭐⭐ **Exceeds** | 6–7 | Identifies root causes, suggests fixes, discusses architecture |
-| ⭐⭐⭐⭐ **Meets** | 4–5 | Catches most issues, explains why they matter |
-| ⭐⭐⭐ **Developing** | 2–3 | Misses critical flaws, limited explanation |
-| ⭐⭐ **Below** | 0–1 | Does not demonstrate testing fundamentals |
+| ⭐⭐⭐⭐⭐ **Exceeds** | 7–8 | Identifies root causes, suggests fixes, discusses architecture |
+| ⭐⭐⭐⭐ **Meets** | 5–6 | Catches most issues, explains why they matter |
+| ⭐⭐⭐ **Developing** | 3–4 | Misses critical flaws, limited explanation |
+| ⭐⭐ **Below** | 0–2 | Does not demonstrate testing fundamentals |
 
 ---
 
-## The 7 Flaws — Answer Key
+## The 8 Flaws — Answer Key
 
 ### 🔴 Flaw 1 — Hardcoded Values
 **Where:** Lines 15–16 (class properties) and `searchViaAPI()` method
@@ -199,6 +199,31 @@ expect(body.email).toContain('@example.com');
 ```
 
 **Follow-up:** *"Why is `response.status()` a stronger assertion than `response.ok()` here? What kinds of bugs can a broad 2xx check hide?"*
+
+---
+
+### 🟡 Flaw 8 — Visibility Check Without Assertion
+**Where:** `verifyTransactionAndAccountListAreVisible()`
+
+**What it is:**
+```typescript
+async verifyTransactionAndAccountListAreVisible(): Promise<void> {
+  await this.transactionList.isVisible();
+  await this.accountList.isVisible();
+}
+```
+
+**Why it's wrong:** `isVisible()` returns a boolean, but the return values are ignored. That means the method never asserts anything, so the test will pass whether the lists are visible or not. In a page object, this creates a false sense of coverage because the method name says "verify" while the implementation only performs no-op checks.
+
+**Correct fix:**
+```typescript
+async verifyTransactionAndAccountListAreVisible(): Promise<void> {
+  await expect(this.transactionList).toBeVisible();
+  await expect(this.accountList).toBeVisible();
+}
+```
+
+**Follow-up:** *"What does `isVisible()` return, and why is that different from `expect(locator).toBeVisible()` in a test helper?"*
 
 ---
 
