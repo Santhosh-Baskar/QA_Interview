@@ -8,6 +8,8 @@ import { SearchLocators } from '../locators/SearchLocators';
  */
 export class TransactionSearchPage extends BasePage {
   readonly searchLocators = new SearchLocators();
+  private readonly transactionList = this.page.locator('[data-testid="transaction-list"]');
+  private readonly accountList = this.page.locator('[data-testid="account-list"]');
   
   private transactionCount: number = 0;
   
@@ -97,6 +99,11 @@ export class TransactionSearchPage extends BasePage {
       this.transactionCount,
       `Transaction count should be greater than 0, but got: ${this.transactionCount}`
     ).toBeGreaterThan(0);
+  }
+
+  async verifyTransactionAndAccountListAreVisible(): Promise<void> {
+    await this.transactionList.isVisible();
+    await this.accountList.isVisible();
   }
 
   /**
