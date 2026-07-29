@@ -33,8 +33,8 @@ test.describe("George Banking - Transaction Search", () => {
 
     console.log("🔧 SETUP: Logging in user (prerequisite)");
 
-    const username = process.env.LOGIN_USERNAME;
-    const password = process.env.LOGIN_PASSWORD;
+    const username = '8963257';
+    const password = 'Test@1234';
 
     if (!username || !password) {
       throw new Error(
