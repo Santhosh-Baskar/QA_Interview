@@ -1,0 +1,33 @@
+{
+  "homepage": {
+    "url": "Set in .env as BASE_URL",
+    "expectedTitle": "Banking Application"
+  },
+  "environment": {
+    "testEnv": "Set in .env as TEST_ENV",
+    "description": "All sensitive URLs and credentials should be stored in .env file, not in fixture files"
+  },
+  "users": {
+    "testUser": {
+      "username": "Set in .env as LOGIN_USERNAME",
+      "password": "Set in .env as LOGIN_PASSWORD",
+      "note": "DO NOT store real credentials here"
+    }
+  },
+  "searchTerms": {
+    "validTerms": ["fashion", "transaction", "payment", "transfer"],
+    "invalidTerms": ["xyzabc123", "nonexistent", "invalidterm"],
+    "emptySearch": "",
+    "specialCharacters": ["!@#$%", "';DROP", "<script>"]
+  },
+  "timeouts": {
+    "pageLoadTimeout": 30000,
+    "elementWaitTimeout": 10000,
+    "networkIdleTimeout": 5000
+  },
+  "expectedMessages": {
+    "noResults": "No results found",
+    "loadingMessage": "Loading...",
+    "successMessage": "Search completed"
+  }
+}
